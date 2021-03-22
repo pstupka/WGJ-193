@@ -8,9 +8,14 @@
 
 config_version=4
 
-_global_script_classes=[  ]
+_global_script_classes=[ {
+"base": "StaticBody2D",
+"class": "ClipableStaticBody",
+"language": "GDScript",
+"path": "res://source/environment/ClipableStaticBody.gd"
+} ]
 _global_script_class_icons={
-
+"ClipableStaticBody": ""
 }
 
 [application]

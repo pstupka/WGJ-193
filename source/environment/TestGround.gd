@@ -1,6 +1,5 @@
 extends StaticBody2D
 
-
 onready var _polygon = $Polygon
 onready var _collision_polygon = $CollisionPolygon
 

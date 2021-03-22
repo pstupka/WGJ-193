@@ -2,14 +2,15 @@ extends Node2D
 
 
 var explosion : PackedScene = preload("res://source/environment/Explosion.tscn")
-onready var test_ground = $TestGround
-var test_area : StaticBody2D
 
-
+#onready var test_ground = $TestGround
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass
+	var init_poly = Polygon2D.new()
+	init_poly.set_polygon($initPolygon.polygon)
+	var clipable_body = ClipableStaticBody.new(init_poly)
+	add_child(clipable_body)
 
 
 func _input(event):
@@ -22,5 +23,10 @@ func _input(event):
 			for node in explosion_instance.explosion_polygon.polygon:
 				node_array.append(node + get_global_mouse_position())
 			for clippable in get_tree().get_nodes_in_group("Clipable"):
-				clippable.clip_static_body(node_array)
+				var leftovers : Array = clippable.clip_static_body(node_array)
+				for area in leftovers:
+					var polygon = Polygon2D.new()
+					polygon.set_polygon(area)
+					var body = ClipableStaticBody.new(polygon)
+					add_child(body)
 

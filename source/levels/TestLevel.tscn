@@ -7,11 +7,11 @@
 script = ExtResource( 1 )
 
 [node name="Player" parent="." instance=ExtResource( 2 )]
-position = Vector2( 213.212, 217.295 )
+position = Vector2( 445.143, 201.739 )
 
 [node name="ExplosionPolygon" type="Polygon2D" parent="."]
 polygon = PoolVector2Array( -27.9635, -23.9164, 20.7718, -42.9868, 39.8422, -17.5597, 27.1286, 24.8189, -23.7256, 33.2946 )
 
 [node name="initPolygon" type="Polygon2D" parent="."]
 visible = false
-polygon = PoolVector2Array( -226.823, 172.919, -153.406, 279.299, 373.998, 262.818, 604.738, 95.0073, 603.239, 385.679, -223.826, 417.143 )
+polygon = PoolVector2Array( -226.823, 172.919, -153.406, 279.299, 373.998, 262.818, 605.577, 186.538, 603.239, 385.679, -223.826, 417.143 )

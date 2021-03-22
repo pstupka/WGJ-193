@@ -25,11 +25,8 @@ func set_polygon(new_polygon : Polygon2D):
 
 func clip_static_body(polygon_to_clip : PoolVector2Array) -> Array:
 	var clipped_array = Geometry.clip_polygons_2d(polygon.polygon, polygon_to_clip)
-	if clipped_array.size() > 1:
-#		clipped_array.remove(1) 
-		print(clipped_array.size())
-	#TODO THIS
-		
-	polygon.set_polygon(clipped_array[0])
-	collision_polygon.set_polygon(clipped_array[0])
+	if clipped_array.size() > 0:
+		polygon.set_polygon(clipped_array[0])
+		collision_polygon.set_polygon(clipped_array[0])
+		clipped_array.remove(0) 
 	return clipped_array

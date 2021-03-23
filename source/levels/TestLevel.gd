@@ -16,6 +16,7 @@ func _ready():
 	texture.load("res://icon.png")
 	clipable_body.set_texture(texture)
 	add_child(clipable_body)
+	
 
 
 func _input(event):
@@ -28,7 +29,6 @@ func _input(event):
 			for node in explosion_instance.explosion_polygon.polygon:
 				node_array.append(node + get_global_mouse_position())
 				
-			print(get_tree().get_nodes_in_group("Clipable").size())
 			for clippable in get_tree().get_nodes_in_group("Clipable"):
 				var leftovers : Array = clippable.clip_static_body(node_array)
 				for area in leftovers:

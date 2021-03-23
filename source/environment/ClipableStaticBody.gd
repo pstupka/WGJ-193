@@ -34,7 +34,6 @@ func set_polygon(new_polygon : Polygon2D):
 # Some bug when clippimg polygon approaches from the left
 func clip_static_body(polygon_to_clip : PoolVector2Array) -> Array:
 	var clipped_array = Geometry.clip_polygons_2d(polygon.polygon, polygon_to_clip)
-	print(self, " ", clipped_array.size())
 	
 	# polygon_to_clip covers whole base polygon
 	if clipped_array.size() == 0:

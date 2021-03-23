@@ -24,6 +24,11 @@ config/name="WGJ193"
 run/main_scene="res://source/levels/TestLevel.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+Events="*res://source/autoload/Events.gd"
+GameManager="*res://source/autoload/GameManager.gd"
+
 [input]
 
 move_left={

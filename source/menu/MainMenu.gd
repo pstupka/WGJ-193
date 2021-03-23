@@ -1,8 +1,15 @@
 extends Control
 
+onready var player1_sprite = $MarginContainer/VBoxContainer/HBoxContainer/PlayerContainer/NinePatchRect/Player1
+var player1_color = 0
+
+onready var player2_sprite = $MarginContainer/VBoxContainer/HBoxContainer/PlayerContainer2/NinePatchRect2/Player2
+var player2_color = 0
 
 func _ready() -> void:
 	register_buttons()
+	player1_sprite.modulate = GameManager.color_palette[0]
+	player2_sprite.modulate = GameManager.color_palette[0]
 
 
 func register_buttons():
@@ -21,11 +28,23 @@ func _on_button_pressed(button) -> void:
 		"AboutButton":
 			print("AboutButton pressed")
 		"Player1Left":
-			print("Player1Left pressed")
+			player1_color -= 1
+			if player1_color < 0:
+				player1_color = 0
+			player1_sprite.modulate = GameManager.color_palette[player1_color]
 		"Player1Right":
-			print("Player1Right pressed")
+			player1_color += 1
+			if player1_color > GameManager.color_palette.size()-1:
+				player1_color = GameManager.color_palette.size()-1
+			player1_sprite.modulate = GameManager.color_palette[player1_color]
 		"Player2Left":
-			print("Player2Left pressed")
+			player2_color -= 1
+			if player2_color < 0:
+				player2_color = 0
+			player2_sprite.modulate = GameManager.color_palette[player2_color]
 		"Player2Right":
-			print("Player2Right pressed")
+			player2_color += 1
+			if player2_color > GameManager.color_palette.size()-1:
+				player2_color = GameManager.color_palette.size()-1
+			player2_sprite.modulate = GameManager.color_palette[player2_color]
 

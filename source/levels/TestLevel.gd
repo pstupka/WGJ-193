@@ -12,8 +12,12 @@ func _ready():
 	init_poly.set_polygon($initPolygon.polygon)
 	$initPolygon.queue_free()
 	var clipable_body = ClipableStaticBody.new(init_poly)
+	
+	var image = Image.new()
+	image.load("res://icon_image.png")
+	
 	var texture = ImageTexture.new()
-	texture.load("res://icon.png")
+	texture.create_from_image(image,7)
 	clipable_body.set_texture(texture)
 	add_child(clipable_body)
 	
@@ -36,8 +40,12 @@ func _input(event):
 					var polygon = Polygon2D.new()
 					polygon.set_polygon(area)
 					var body = ClipableStaticBody.new(polygon)
+						
+					var image = Image.new()
+					image.load("res://icon_image.png")
+					
 					var texture = ImageTexture.new()
-					texture.load("res://icon.png")
+					texture.create_from_image(image)
 					body.set_texture(texture)
 					add_child(body)
 

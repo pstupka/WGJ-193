@@ -3,15 +3,14 @@ extends Node
 var wind_strength = 10
 var gravity = 100
 
+var main_level = preload("res://source/levels/TestLevel.tscn")
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass # Replace with function body.
+	Events.connect("new_game", self, "_on_new_game_started")
 
 
-func start_turn() -> void:
-	pass
+func _on_new_game_started() -> void:
+	get_tree().change_scene_to(main_level)
 
-
-func end_turn() -> void:
-	pass
 

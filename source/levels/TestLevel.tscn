@@ -7,11 +7,11 @@
 [node name="TestLevel" type="Node2D"]
 script = ExtResource( 1 )
 
-[node name="Soldier" parent="." instance=ExtResource( 2 )]
-position = Vector2( 445.143, 201.739 )
-
 [node name="Alien" parent="." instance=ExtResource( 2 )]
 position = Vector2( -150.442, 203.627 )
+
+[node name="Soldier" parent="." instance=ExtResource( 2 )]
+position = Vector2( 445.143, 201.739 )
 
 [node name="ExplosionPolygon" type="Polygon2D" parent="."]
 polygon = PoolVector2Array( -27.9635, -23.9164, 20.7718, -42.9868, 39.8422, -17.5597, 27.1286, 24.8189, -23.7256, 33.2946 )

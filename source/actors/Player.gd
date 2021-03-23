@@ -1,8 +1,8 @@
 extends KinematicBody2D
 
 export var SPEED = 80
-export var GRAVITY = 1000
-export var JUMP_SPEED = 300
+export var GRAVITY = 500
+export var JUMP_SPEED = 150
 var velocity = Vector2()
 var direction = 0.0
 var can_move = false
@@ -30,7 +30,6 @@ func process_input(delta):
 	if Input.is_action_just_pressed("jump"):
 		if is_on_floor():
 			velocity.y -= JUMP_SPEED
-
 
 
 func process_movement(delta):

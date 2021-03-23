@@ -17,6 +17,7 @@ func _ready():
 	clipable_body.set_texture(texture)
 	add_child(clipable_body)
 	
+	$Soldier.can_move = true
 
 
 func _input(event):

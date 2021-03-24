@@ -8,6 +8,7 @@ var outline : Line2D
 func _init(_polygon : Polygon2D):
 	self.polygon = _polygon
 	add_to_group("Clipable")
+	add_to_group("Terrain")
 
 func _ready():
 	add_child(polygon)
@@ -25,7 +26,7 @@ func set_polygon(new_polygon : Polygon2D):
 	if outline == null:
 		outline = Line2D.new()
 		outline.width = 3
-		outline.default_color = Color.black
+		outline.default_color = Color("3f2832")
 		outline.joint_mode = Line2D.LINE_JOINT_ROUND
 		outline.set_points(polygon.polygon)
 		outline.add_point(outline.points[0])

@@ -18,17 +18,24 @@ var camera_initial_zoom
 onready var camera2d = $Camera2D
 onready var tweenCameraZoom = $Camera2D/TweenCameraZoom
 
-var team : String
+# Animation Player
+onready var animation_player = $AnimationPlayer
+
+var player_color : Color
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	player_color = GameManager.global_settings["player1_color"]
+	$Pivot/Sprite.modulate = player_color
 	camera_initial_zoom = $Camera2D.zoom
+	animation_player.play("player_animation_idle")
 
 
 func _physics_process(delta):
 	if can_move:
 		process_input(delta)
 	process_movement(delta)
+	handle_animation_state()
 
 
 func _unhandled_key_input(event):
@@ -60,6 +67,9 @@ func process_input(_delta):
 	if Input.is_action_just_pressed("jump"):
 		if is_on_floor():
 			velocity.y -= JUMP_SPEED
+			
+	if Input.is_action_just_pressed("fire"):
+		$Weapon.fire_bullet()
 
 
 func process_movement(delta):
@@ -71,3 +81,16 @@ func process_movement(delta):
 		velocity.x = 0
 	
 	velocity = move_and_slide(velocity, Vector2.UP, true, 4, deg2rad(MAX_SLOPE_ANGLE))
+
+
+func handle_animation_state() -> void:
+	if direction != 0:
+		animation_player.play("player_animation_run")
+	if velocity.y > 0 and direction == 0:
+		$Pivot.rotation_degrees = 0
+		animation_player.stop()
+		animation_player.play("player_animation_still")
+		return
+	if direction == 0:
+		$Pivot.rotation_degrees = 0
+		animation_player.play("player_animation_idle")

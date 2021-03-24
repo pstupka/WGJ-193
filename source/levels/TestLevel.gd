@@ -13,39 +13,33 @@ func _ready():
 	$initPolygon.queue_free()
 	var clipable_body = ClipableStaticBody.new(init_poly)
 	
-	var image = Image.new()
-	image.load("res://icon_image.png")
 	
-	var texture = ImageTexture.new()
-	texture.create_from_image(image,7)
-	clipable_body.set_texture(texture)
+	clipable_body.set_texture(prepare_texture_from_resource("res://assets/gfx/environment/ground_image.png"))
 	add_child(clipable_body)
 	
 	$Soldier.can_move = true
+	
+	Events.connect("bullet_exploded", self, "_on_bullet_exploded")
 
 
-func _input(event):
-	if event is InputEventMouseButton:
-		if event.button_index == BUTTON_LEFT and event.pressed:
-			var node_array : PoolVector2Array = []
-			var explosion_instance = explosion.instance()
-			explosion_instance.position = get_global_mouse_position()
-			add_child(explosion_instance)
-			for node in explosion_instance.explosion_polygon.polygon:
-				node_array.append(node + get_global_mouse_position())
-				
-			for clippable in get_tree().get_nodes_in_group("Clipable"):
-				var leftovers : Array = clippable.clip_static_body(node_array)
-				for area in leftovers:
-					var polygon = Polygon2D.new()
-					polygon.set_polygon(area)
-					var body = ClipableStaticBody.new(polygon)
-						
-					var image = Image.new()
-					image.load("res://icon_image.png")
-					
-					var texture = ImageTexture.new()
-					texture.create_from_image(image)
-					body.set_texture(texture)
-					add_child(body)
 
+func _on_bullet_exploded(explosion : Polygon2D):
+	for clippable in get_tree().get_nodes_in_group("Clipable"):
+		var leftovers : Array = clippable.clip_static_body(explosion.polygon)
+		for area in leftovers:
+			var poly = Polygon2D.new()
+			poly.set_polygon(area)
+			var body = ClipableStaticBody.new(poly)
+
+			body.set_texture(prepare_texture_from_resource("res://assets/gfx/environment/ground_image.png"))
+			add_child(body)
+
+
+func prepare_texture_from_resource(path : String) -> ImageTexture:
+	var image = Image.new()
+	image.load(path)
+	
+	var texture = ImageTexture.new()
+	texture.create_from_image(image,7)
+	
+	return texture

@@ -22,6 +22,11 @@ var color_palette = [
 	Color("2ce8f4"),
 	Color("0484d1")
 ]
+
+var global_settings = {
+	"player1_color": Color("e4a672"),
+	"player2_color": Color("e4a672")
+}
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	Events.connect("new_game", self, "_on_new_game_started")
@@ -29,5 +34,4 @@ func _ready() -> void:
 
 func _on_new_game_started() -> void:
 	get_tree().change_scene_to(main_level)
-
 

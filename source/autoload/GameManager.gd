@@ -5,6 +5,7 @@ var gravity = 100
 
 var main_level = preload("res://source/levels/TestLevel.tscn")
 var _player1 = preload("res://source/actors/Player.tscn")
+var _player2 = preload("res://source/actors/Player2.tscn")
 
 
 var color_palette = [
@@ -47,22 +48,25 @@ func _ready() -> void:
 	Events.connect("turn_completed", self, "_on_turn_completed")
 	
 	player1 = _player1.instance()
-	player2 = _player1.instance()
-
+	player1.id = "player1"
+	
+	player2 = _player2.instance()
+	player2.id = "player2"
 
 func _on_new_game_started() -> void:
 	get_tree().change_scene_to(main_level)
-	yield(get_tree().create_timer(0.5),"timeout")
-	player1.start_turn()
+	yield(get_tree().create_timer(0.1),"timeout")
+
 	current_player = player1
+	current_player.start_turn()
 
 
 func _on_turn_completed() -> void:
 	current_player.end_turn()
-	
+
 	if current_player == player1:
 		current_player = player2
 	else:
 		current_player = player1
-	
+
 	current_player.start_turn()

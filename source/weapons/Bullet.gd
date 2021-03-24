@@ -12,17 +12,18 @@ func _process(delta: float) -> void:
 	$CollisionShape2D.rotation = linear_velocity.angle()
 	$bullet.rotation = linear_velocity.angle()
 	
-	if position.y > 10000:
+	if position.y > 1000:
+		Events.emit_signal("turn_completed")
 		queue_free()
 
 
 func _on_body_entered(body: Node) -> void:
 	sleeping = true
-	$CollisionShape2D.call_deferred("set_disabled", true)
+#	$CollisionShape2D.call_deferred("set_disabled", true)
 	hide()
 	var explosion_instance = explosion.instance()
-	explosion_instance.global_position = global_position
 	get_tree().current_scene.add_child(explosion_instance)
+	explosion_instance.global_position = global_position
 	Events.emit_signal("bullet_exploded", explosion_instance.explosion_polygon)
 
 	timer.start()

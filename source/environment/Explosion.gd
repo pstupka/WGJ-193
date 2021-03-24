@@ -6,7 +6,7 @@ onready var explosion_polygon = $ExplosionPolygon
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	var offset_vertices = explosion_polygon.polygon
+
 	for i in explosion_polygon.polygon.size():
 		explosion_polygon.polygon[i] += global_position
 	

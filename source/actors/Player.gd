@@ -5,7 +5,7 @@ class_name Player
 # Movement section
 export var SPEED = 80
 export var GRAVITY = 500
-export var JUMP_SPEED = 150
+export var JUMP_SPEED = 230
 var velocity = Vector2()
 var direction = 0.0
 var can_move = false
@@ -24,17 +24,24 @@ onready var tweenCameraZoom = $Camera2D/TweenCameraZoom
 onready var animation_player = $AnimationPlayer
 
 onready var weapon = $Weapon
+onready var tween = $Tween
+
+export var MAX_HEALTH = 200
+var current_health = MAX_HEALTH
 
 # Player settings
 var player_color : Color
 var player_name : String
 
+var id : String
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	player_color = GameManager.global_settings["player1_color"]
+	add_to_group("Players")
+	player_color = GameManager.global_settings[id + "_color"]
 	$Pivot/Sprite.modulate = player_color
 	
-	player_name = GameManager.global_settings["player1_name"]
+	player_name = GameManager.global_settings[id + "_name"]
 	if player_name == "":
 		$NameLabel.text = "Player"
 	else:
@@ -87,7 +94,10 @@ func process_input(_delta):
 			velocity.y -= JUMP_SPEED
 			
 	if Input.is_action_just_pressed("fire"):
-		$Weapon.fire_bullet()
+		$Weapon.load_weapon()
+#		$Weapon.fire_bullet()
+	if Input.is_action_just_released("fire"):
+		$Weapon.interrupt_loading()
 
 
 func process_movement(delta):
@@ -121,6 +131,7 @@ func end_turn() -> void:
 	weapon.hide()
 	direction = 0
 	animation_player.play("player_animation_idle")
+	camera2d.current = false
 
 
 func start_turn() -> void:
@@ -129,3 +140,9 @@ func start_turn() -> void:
 	weapon.set_process(true)
 	weapon.show()
 	
+	camera2d.current = true
+
+
+func _on_Hitbox_area_entered(area):
+	if area.is_in_group("Explosions"):
+		print(global_position.distance_to(area.global_position))

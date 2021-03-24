@@ -3,6 +3,8 @@ extends RigidBody2D
 export(PackedScene) var explosion
 onready var timer = $Timer
 
+var damage = 30
+var damage_factor = 70
 
 func _ready() -> void:
 	add_force(Vector2.ZERO, GameManager.wind_direction * GameManager.wind_strength)
@@ -19,13 +21,13 @@ func _process(delta: float) -> void:
 
 func _on_body_entered(body: Node) -> void:
 	sleeping = true
-#	$CollisionShape2D.call_deferred("set_disabled", true)
+	$CollisionShape2D.call_deferred("set_disabled", true)
 	hide()
 	var explosion_instance = explosion.instance()
-	get_tree().current_scene.add_child(explosion_instance)
 	explosion_instance.global_position = global_position
+	get_tree().current_scene.add_child(explosion_instance)
 	Events.emit_signal("bullet_exploded", explosion_instance.explosion_polygon)
-
+	$Hitbox/HitboxCollision.call_deferred("set_disabled", false)
 	timer.start()
 
 

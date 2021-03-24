@@ -26,7 +26,7 @@ onready var animation_player = $AnimationPlayer
 onready var weapon = $Weapon
 onready var tween = $Tween
 
-export var MAX_HEALTH = 200
+export var MAX_HEALTH = 200.0
 var current_health = MAX_HEALTH
 
 # Player settings
@@ -48,6 +48,10 @@ func _ready():
 		$NameLabel.text = player_name
 	
 	camera_initial_zoom = camera2d.zoom
+	
+	$HealthBar.max_value = MAX_HEALTH
+	$HealthBar.value = MAX_HEALTH
+	
 	animation_player.play("player_animation_idle")
 	weapon.hide()
 
@@ -143,6 +147,17 @@ func start_turn() -> void:
 	camera2d.current = true
 
 
+func take_damage(damage : float) -> void:
+	var start_tween = current_health
+	current_health -= damage
+	if current_health <= 0:
+		current_health = 0
+		Events.emit_signal("player_died", self)
+	$Tween.interpolate_property($HealthBar, "value", start_tween, current_health, 0.2, Tween.TRANS_LINEAR,Tween.EASE_IN)
+	$Tween.start()
+
+
 func _on_Hitbox_area_entered(area):
-	if area.is_in_group("Explosions"):
-		print(global_position.distance_to(area.global_position))
+	if area.is_in_group("Bullets"):
+		var distance_to_center = global_position.distance_to(area.global_position)
+		take_damage(10*area.get_parent().damage_factor/distance_to_center)

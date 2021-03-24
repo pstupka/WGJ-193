@@ -46,18 +46,24 @@ var current_player
 func _ready() -> void:
 	Events.connect("new_game", self, "_on_new_game_started")
 	Events.connect("turn_completed", self, "_on_turn_completed")
+	Events.connect("player_died", self, "_on_player_died")
 	
 	player1 = _player1.instance()
 	player1.id = "player1"
+
 	
 	player2 = _player2.instance()
 	player2.id = "player2"
+
+
 
 func _on_new_game_started() -> void:
 	get_tree().change_scene_to(main_level)
 	yield(get_tree().create_timer(0.1),"timeout")
 
 	current_player = player1
+	player1.name = global_settings["player1_name"]
+	player2.name = global_settings["player2_name"]
 	current_player.start_turn()
 
 
@@ -70,3 +76,7 @@ func _on_turn_completed() -> void:
 		current_player = player1
 
 	current_player.start_turn()
+
+
+func _on_player_died(player : Player) -> void:
+	print(player.player_name + " died")

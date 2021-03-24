@@ -25,7 +25,7 @@ func _ready():
 
 
 func _on_bullet_exploded(explosion : Polygon2D):
-	print(explosion.polygon)
+
 	for clippable in get_tree().get_nodes_in_group("Clipable"):
 		var leftovers : Array = clippable.clip_static_body(explosion.polygon)
 		for area in leftovers:

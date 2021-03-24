@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://assets/gfx/weapons/bullet.png" type="Texture" id=1]
 [ext_resource path="res://source/weapons/Bullet.gd" type="Script" id=2]
@@ -6,6 +6,9 @@
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 5.75845, 2.87621 )
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 70.0
 
 [node name="Bullet" type="RigidBody2D"]
 collision_layer = 4
@@ -36,5 +39,15 @@ drag_margin_bottom = 0.8
 [node name="Timer" type="Timer" parent="."]
 wait_time = 2.0
 one_shot = true
+
+[node name="Hitbox" type="Area2D" parent="." groups=[
+"Bullets",
+]]
+collision_layer = 4
+collision_mask = 16
+
+[node name="HitboxCollision" type="CollisionShape2D" parent="Hitbox"]
+shape = SubResource( 2 )
+disabled = true
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

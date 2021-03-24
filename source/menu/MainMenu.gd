@@ -1,9 +1,11 @@
 extends Control
 
 onready var player1_sprite = $MarginContainer/VBoxContainer/HBoxContainer/PlayerContainer/NinePatchRect/Player1
+onready var player1_name = $MarginContainer/VBoxContainer/HBoxContainer/PlayerContainer/Player1Name
 var player1_color = 0
 
 onready var player2_sprite = $MarginContainer/VBoxContainer/HBoxContainer/PlayerContainer2/NinePatchRect2/Player2
+onready var player2_name = $MarginContainer/VBoxContainer/HBoxContainer/PlayerContainer2/Player2Name
 var player2_color = 0
 
 func _ready() -> void:
@@ -21,7 +23,8 @@ func register_buttons():
 func _on_button_pressed(button) -> void:
 	match button.name:
 		"StartButton":
-			print("StartButton pressed")
+			GameManager.global_settings["player1_name"] = player1_name.text
+			GameManager.global_settings["player2_name"] = player2_name.text
 			Events.emit_signal("new_game")
 		"CreditsButton":
 			print("CreditsButton pressed")

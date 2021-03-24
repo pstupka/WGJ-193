@@ -1,4 +1,6 @@
 extends KinematicBody2D
+class_name Player
+
 
 # Movement section
 export var SPEED = 80
@@ -21,14 +23,30 @@ onready var tweenCameraZoom = $Camera2D/TweenCameraZoom
 # Animation Player
 onready var animation_player = $AnimationPlayer
 
+onready var weapon = $Weapon
+
+# Player settings
 var player_color : Color
+var player_name : String
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	player_color = GameManager.global_settings["player1_color"]
 	$Pivot/Sprite.modulate = player_color
-	camera_initial_zoom = $Camera2D.zoom
+	
+	player_name = GameManager.global_settings["player1_name"]
+	if player_name == "":
+		$NameLabel.text = "Player"
+	else:
+		$NameLabel.text = player_name
+	
+	camera_initial_zoom = camera2d.zoom
 	animation_player.play("player_animation_idle")
+	weapon.hide()
+
+
+func _process(delta: float) -> void:
+	pass
 
 
 func _physics_process(delta):
@@ -94,3 +112,20 @@ func handle_animation_state() -> void:
 	if direction == 0:
 		$Pivot.rotation_degrees = 0
 		animation_player.play("player_animation_idle")
+
+
+func end_turn() -> void:
+	can_move = false
+	weapon.can_fire = false
+	weapon.set_process(false)
+	weapon.hide()
+	direction = 0
+	animation_player.play("player_animation_idle")
+
+
+func start_turn() -> void:
+	can_move = true
+	weapon.can_fire = true
+	weapon.set_process(true)
+	weapon.show()
+	

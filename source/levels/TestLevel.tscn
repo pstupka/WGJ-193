@@ -1,14 +1,15 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=2 format=2]
 
 [ext_resource path="res://source/levels/TestLevel.gd" type="Script" id=1]
-[ext_resource path="res://source/actors/Player.tscn" type="PackedScene" id=2]
 
 [node name="TestLevel" type="Node2D"]
 script = ExtResource( 1 )
 
-[node name="Soldier" parent="." instance=ExtResource( 2 )]
-position = Vector2( 445.143, 201.739 )
-
 [node name="initPolygon" type="Polygon2D" parent="."]
-visible = false
-polygon = PoolVector2Array( -226.823, 172.919, -153.406, 279.299, 373.998, 262.818, 605.577, 186.538, 603.239, 385.679, -223.826, 417.143 )
+polygon = PoolVector2Array( -709.826, 126.22, -414.902, 64.3817, -286.468, 230.871, 8.45544, 283.196, 283.246, 366.069, 802.846, 268.925, 1202.42, 368.819, 1506.86, 240.384, 1811.29, 392.603, 2347.23, 113.205, 2610.44, 102.436, 2643.88, 638.699, -746.406, 655.651 )
+
+[node name="Player1Position" type="Position2D" parent="."]
+position = Vector2( -555.159, 25.1259 )
+
+[node name="Player2Position" type="Position2D" parent="."]
+position = Vector2( -327.773, 43.5104 )

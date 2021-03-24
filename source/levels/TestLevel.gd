@@ -3,8 +3,6 @@ extends Node2D
 
 var explosion : PackedScene = preload("res://source/environment/Explosion.tscn")
 
-#onready var test_ground = $TestGround
-
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	randomize()
@@ -17,10 +15,13 @@ func _ready():
 	clipable_body.set_texture(prepare_texture_from_resource("res://assets/gfx/environment/ground_image.png"))
 	add_child(clipable_body)
 	
-	$Soldier.can_move = true
+	GameManager.player1.position = $Player1Position.position
+	GameManager.player2.position = $Player2Position.position
+	add_child(GameManager.player1)
+	add_child(GameManager.player2)
+	
 	
 	Events.connect("bullet_exploded", self, "_on_bullet_exploded")
-
 
 
 func _on_bullet_exploded(explosion : Polygon2D):

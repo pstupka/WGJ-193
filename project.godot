@@ -13,9 +13,15 @@ _global_script_classes=[ {
 "class": "ClipableStaticBody",
 "language": "GDScript",
 "path": "res://source/environment/ClipableStaticBody.gd"
+}, {
+"base": "KinematicBody2D",
+"class": "Player",
+"language": "GDScript",
+"path": "res://source/actors/Player.gd"
 } ]
 _global_script_class_icons={
-"ClipableStaticBody": ""
+"ClipableStaticBody": "",
+"Player": ""
 }
 
 [application]

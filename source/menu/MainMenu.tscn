@@ -1,6 +1,7 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://assets/fonts/Kenney Blocks.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://assets/gfx/environment/ground.png" type="Texture" id=2]
 [ext_resource path="res://assets/fonts/Kenney Pixel Square.ttf" type="DynamicFontData" id=3]
 [ext_resource path="res://assets/ui/BorderStyle.tres" type="StyleBox" id=4]
 [ext_resource path="res://assets/ui/button_border_hover.png" type="Texture" id=5]
@@ -52,10 +53,13 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="TextureRect" type="TextureRect" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
-color = Color( 0.494118, 0.223529, 0.890196, 0.568627 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource( 2 )
+stretch_mode = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }

@@ -23,8 +23,16 @@ func register_buttons():
 func _on_button_pressed(button) -> void:
 	match button.name:
 		"StartButton":
-			GameManager.global_settings["player1_name"] = player1_name.text
-			GameManager.global_settings["player2_name"] = player2_name.text
+			if player1_name.text == "":
+				GameManager.global_settings["player1_name"] = "Player 1"
+			else:
+				GameManager.global_settings["player1_name"] = player1_name.text
+				
+			if player2_name.text == "":
+				GameManager.global_settings["player2_name"] = "Player 2"
+			else:
+				GameManager.global_settings["player2_name"] = player2_name.text
+
 			Events.emit_signal("new_game")
 		"CreditsButton":
 			print("CreditsButton pressed")

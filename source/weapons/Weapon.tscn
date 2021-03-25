@@ -1,9 +1,8 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://source/weapons/Weapon.gd" type="Script" id=1]
 [ext_resource path="res://assets/gfx/weapons/bazooka.png" type="Texture" id=2]
 [ext_resource path="res://assets/gfx/weapons/crosshair.png" type="Texture" id=3]
-[ext_resource path="res://assets/gfx/weapons/fire_under.png" type="Texture" id=4]
 [ext_resource path="res://assets/gfx/weapons/fire_progress.png" type="Texture" id=5]
 
 [sub_resource type="Animation" id=1]
@@ -47,7 +46,6 @@ margin_bottom = 31.9466
 max_value = 1.0
 step = 0.01
 value = 0.12
-texture_under = ExtResource( 4 )
 texture_progress = ExtResource( 5 )
 __meta__ = {
 "_edit_use_anchors_": false

@@ -31,7 +31,7 @@ var current_health = MAX_HEALTH
 
 # Player settings
 var player_color : Color
-var player_name : String
+var player_name : String setget set_name
 
 var id : String
 
@@ -41,23 +41,24 @@ func _ready():
 	player_color = GameManager.global_settings[id + "_color"]
 	$Pivot/Sprite.modulate = player_color
 	
-	player_name = GameManager.global_settings[id + "_name"]
-	if player_name == "":
-		$NameLabel.text = "Player"
-	else:
-		$NameLabel.text = player_name
-	
 	camera_initial_zoom = camera2d.zoom
 	
 	$HealthBar.max_value = MAX_HEALTH
 	$HealthBar.value = MAX_HEALTH
+	current_health = MAX_HEALTH
 	
 	animation_player.play("player_animation_idle")
 	weapon.hide()
 
 
 func _process(delta: float) -> void:
-	pass
+	if camera2d.current:
+		var direction_to_mouse = get_global_mouse_position() - global_position
+		var distance_to_mouse = global_position.distance_to(get_global_mouse_position())
+		if distance_to_mouse > 20:
+			# Arbitrary values applied
+			camera2d.offset_h = lerp(camera2d.offset_h, direction_to_mouse.normalized().x, 0.1)
+			camera2d.offset_v = lerp(camera2d.offset_v, direction_to_mouse.normalized().y, 0.1)
 
 
 func _physics_process(delta):
@@ -65,6 +66,8 @@ func _physics_process(delta):
 		process_input(delta)
 	process_movement(delta)
 	handle_animation_state()
+	if position.y > 1000:
+		Events.emit_signal("player_died", self)
 
 
 func _unhandled_key_input(event):
@@ -72,7 +75,7 @@ func _unhandled_key_input(event):
 		tweenCameraZoom.interpolate_property($Camera2D,
 			"zoom",
 			camera_initial_zoom,
-			2.5 * camera_initial_zoom,
+			2 * camera_initial_zoom,
 			0.6,
 			Tween.TRANS_EXPO,
 			Tween.EASE_OUT
@@ -94,6 +97,7 @@ func process_input(_delta):
 	direction = Input.get_action_strength("move_right") - Input.get_action_strength("move_left")
 	
 	if Input.is_action_just_pressed("jump"):
+
 		if is_on_floor():
 			velocity.y -= JUMP_SPEED
 			
@@ -152,12 +156,23 @@ func take_damage(damage : float) -> void:
 	current_health -= damage
 	if current_health <= 0:
 		current_health = 0
+
 		Events.emit_signal("player_died", self)
-	$Tween.interpolate_property($HealthBar, "value", start_tween, current_health, 0.2, Tween.TRANS_LINEAR,Tween.EASE_IN)
+	$Tween.interpolate_property($HealthBar, "value", start_tween, current_health, 0.6, Tween.TRANS_LINEAR,Tween.EASE_IN)
 	$Tween.start()
+	
+	if current_health < MAX_HEALTH * 0.6:
+		$HealthBar.modulate = Color("fb922b")
+	if current_health < MAX_HEALTH * 0.3:
+		$HealthBar.modulate = Color("9e2835")
+
+
+func set_name(name : String) -> void:
+	player_name = name
+	$NameLabel.text = name
 
 
 func _on_Hitbox_area_entered(area):
 	if area.is_in_group("Bullets"):
 		var distance_to_center = global_position.distance_to(area.global_position)
-		take_damage(10*area.get_parent().damage_factor/distance_to_center)
+		take_damage(clamp(10*area.get_parent().damage_factor/distance_to_center,0,50))

@@ -10,6 +10,6 @@ func _ready():
 		explosion_polygon.polygon[i] += global_position
 	
 	$Particles.emitting = true
-	yield(get_tree().create_timer(1),"timeout")
+	yield(get_tree().create_timer(0.7),"timeout")
 	queue_free()
 

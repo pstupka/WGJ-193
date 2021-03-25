@@ -35,6 +35,10 @@ config/icon="res://icon.png"
 Events="*res://source/autoload/Events.gd"
 GameManager="*res://source/autoload/GameManager.gd"
 
+[display]
+
+window/size/resizable=false
+
 [input]
 
 move_left={

@@ -2,17 +2,19 @@ extends Node2D
 
 
 var explosion : PackedScene = preload("res://source/environment/Explosion.tscn")
+var ground_texture = Texture
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	randomize()
 	var init_poly = Polygon2D.new()
 	init_poly.set_polygon($initPolygon.polygon)
+	ground_texture = $initPolygon.texture
 	$initPolygon.queue_free()
 	var clipable_body = ClipableStaticBody.new(init_poly)
 	
 	
-	clipable_body.set_texture(prepare_texture_from_resource("res://assets/gfx/environment/ground_image.png"))
+	clipable_body.set_texture(ground_texture)
 	add_child(clipable_body)
 	
 	GameManager.player1.position = $Player1Position.position
@@ -33,15 +35,5 @@ func _on_bullet_exploded(explosion : Polygon2D):
 			poly.set_polygon(area)
 			var body = ClipableStaticBody.new(poly)
 
-			body.set_texture(prepare_texture_from_resource("res://assets/gfx/environment/ground_image.png"))
+			body.set_texture(ground_texture)
 			add_child(body)
-
-
-func prepare_texture_from_resource(path : String) -> ImageTexture:
-	var image = Image.new()
-	image.load(path)
-	
-	var texture = ImageTexture.new()
-	texture.create_from_image(image,7)
-	
-	return texture

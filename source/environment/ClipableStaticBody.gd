@@ -12,7 +12,7 @@ func _init(_polygon : Polygon2D):
 
 func _ready():
 	add_child(polygon)
-	add_child(collision_polygon)
+	call_deferred("add_child", collision_polygon)
 	add_child(outline)
 
 

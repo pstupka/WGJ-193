@@ -52,13 +52,14 @@ func _ready():
 
 
 func _process(delta: float) -> void:
-	if camera2d.current:
-		var direction_to_mouse = get_global_mouse_position() - global_position
-		var distance_to_mouse = global_position.distance_to(get_global_mouse_position())
-		if distance_to_mouse > 20:
-			# Arbitrary values applied
-			camera2d.offset_h = lerp(camera2d.offset_h, direction_to_mouse.normalized().x, 0.1)
-			camera2d.offset_v = lerp(camera2d.offset_v, direction_to_mouse.normalized().y, 0.1)
+	pass
+#	if camera2d.current:
+#		var direction_to_mouse = get_global_mouse_position() - global_position
+#		var distance_to_mouse = global_position.distance_to(get_global_mouse_position())
+#		if distance_to_mouse > 20:
+#			# Arbitrary values applied
+#			camera2d.offset_h = lerp(camera2d.offset_h, direction_to_mouse.normalized().x*2, 0.5)
+#			camera2d.offset_v = lerp(camera2d.offset_v, direction_to_mouse.normalized().y*2, 0.5)
 
 
 func _physics_process(delta):
@@ -97,8 +98,9 @@ func process_input(_delta):
 	direction = Input.get_action_strength("move_right") - Input.get_action_strength("move_left")
 	
 	if Input.is_action_just_pressed("jump"):
-
 		if is_on_floor():
+			$FootstepPlayer.stop()
+			$JumpPlayer.play()
 			velocity.y -= JUMP_SPEED
 			
 	if Input.is_action_just_pressed("fire"):
@@ -122,6 +124,9 @@ func process_movement(delta):
 func handle_animation_state() -> void:
 	if direction != 0:
 		animation_player.play("player_animation_run")
+	if !is_on_floor():
+		animation_player.play("player_animation_still")
+
 	if velocity.y > 0 and direction == 0:
 		$Pivot.rotation_degrees = 0
 		animation_player.stop()

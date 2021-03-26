@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://assets/gfx/characters/character2.png" type="Texture" id=1]
 [ext_resource path="res://source/actors/Player.gd" type="Script" id=2]
@@ -10,6 +10,8 @@
 [ext_resource path="res://assets/gfx/misc/player_health_back.png" type="Texture" id=8]
 [ext_resource path="res://assets/gfx/misc/rip.png" type="Texture" id=9]
 [ext_resource path="res://assets/resources/player_animation_die.tres" type="Animation" id=10]
+[ext_resource path="res://assets/audio/step.wav" type="AudioStream" id=11]
+[ext_resource path="res://assets/audio/jump.wav" type="AudioStream" id=12]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 1.61938, 6.56243 )
@@ -36,7 +38,7 @@ shape = SubResource( 1 )
 
 [node name="Pivot" type="Node2D" parent="."]
 position = Vector2( 0, 5.08628 )
-rotation = -0.011947
+rotation = 0.0872665
 
 [node name="Sprite" type="Sprite" parent="Pivot"]
 position = Vector2( 0, -5.10411 )
@@ -47,7 +49,7 @@ visible = false
 modulate = Color( 0.454902, 0.454902, 0.454902, 1 )
 position = Vector2( 0, 4 )
 rotation = 0.011947
-scale = Vector2( 1, 1e-05 )
+scale = Vector2( 1, 0.133333 )
 texture = ExtResource( 9 )
 centered = false
 offset = Vector2( -8, -16 )
@@ -62,6 +64,7 @@ shape = SubResource( 2 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2( 0.8, 0.8 )
+smoothing_enabled = true
 
 [node name="TweenCameraZoom" type="Tween" parent="Camera2D"]
 
@@ -103,4 +106,12 @@ texture_progress = ExtResource( 7 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="FootstepPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 11 )
+volume_db = -10.0
+
+[node name="JumpPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 12 )
+volume_db = -10.0
 [connection signal="area_entered" from="Hitbox" to="." method="_on_Hitbox_area_entered"]

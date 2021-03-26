@@ -22,6 +22,8 @@ func _process(delta):
 
 
 func fire_bullet():
+	$FirePlayer.play()
+	$LoadingPlayer.stop()
 	get_parent().camera2d.current = false
 	var bullet_instance : RigidBody2D = bullet.instance()
 	var direction = global_position.direction_to(get_global_mouse_position()).normalized()

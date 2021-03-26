@@ -10,6 +10,7 @@ func _ready():
 		explosion_polygon.polygon[i] += global_position
 	
 	$Particles.emitting = true
+	$AudioStreamPlayer.play()
 	yield(get_tree().create_timer(0.7),"timeout")
 	queue_free()
 
